@@ -1,6 +1,237 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Vũ trụ nhỏ của chúng ta</title>
+    <meta name="description" content="Một góc nhỏ được tạo nên dành riêng cho chúng ta." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+    <!-- Global fixed background: night sky canvas + progress bar -->
+    <canvas id="sky-canvas"></canvas>
+    <div id="cursor-glow"></div>
+    <div id="floating-hearts"></div>
+    <div id="scroll-progress">
+        <div id="scroll-progress-bar"></div>
+    </div>
+
+    <!-- ===================== 1. HERO ===================== -->
+    <section id="hero" class="section hero">
+        <div class="hero-content">
+            <p class="hero-eyebrow reveal-line">Chào em yêu,</p>
+            <h1 class="hero-title reveal-line" id="hero-typing"></h1>
+            <button id="enter-btn" class="btn btn-primary reveal-line">
+                <span>Bước vào thế giới của chúng ta</span> <span class="heart">♡</span>
+            </button>
+        </div>
+        <div class="scroll-hint">cuộn xuống</div>
+    </section>
+
+    <!-- ===================== 2. LOVE COUNTER ===================== -->
+    <section id="counter" class="section">
+        <div class="container reveal">
+            <p class="eyebrow">Chúng ta đã bên nhau</p>
+            <div class="counter-grid">
+                <div class="counter-item">
+                    <span class="counter-number" id="count-days">0</span>
+                    <span class="counter-label">Ngày</span>
+                </div>
+                <div class="counter-item">
+                    <span class="counter-number" id="count-hours">0</span>
+                    <span class="counter-label">Giờ</span>
+                </div>
+                <div class="counter-item">
+                    <span class="counter-number" id="count-minutes">0</span>
+                    <span class="counter-label">Phút</span>
+                </div>
+                <div class="counter-item">
+                    <span class="counter-number" id="count-seconds">0</span>
+                    <span class="counter-label">Giây</span>
+                </div>
+            </div>
+            <p class="counter-footer">Và anh vẫn luôn chọn em.</p>
+        </div>
+    </section>
+
+    <!-- ===================== 3. OUR STORY / TIMELINE ===================== -->
+    <section id="story" class="section">
+        <div class="container">
+            <h2 class="section-title reveal">Câu chuyện của chúng ta</h2>
+            <p class="section-subtitle reveal">Từng khoảnh khắc nhỏ đã đưa chúng ta đến bên nhau.</p>
+            <div class="timeline" id="timeline"><!-- populated by JS --></div>
+        </div>
+    </section>
+
+    <!-- Timeline modal -->
+    <div class="modal-overlay" id="timeline-modal">
+        <div class="modal-card">
+            <button class="modal-close" data-close-modal="timeline-modal">&times;</button>
+            <img id="timeline-modal-img" src="" alt="" />
+            <p class="modal-date" id="timeline-modal-date"></p>
+            <h3 id="timeline-modal-title"></h3>
+            <p id="timeline-modal-detail"></p>
+        </div>
+    </div>
+
+    <!-- ===================== 4. OUR MEMORIES ===================== -->
+    <section id="memories" class="section">
+        <div class="container">
+            <h2 class="section-title reveal">Ký ức của chúng ta</h2>
+            <p class="section-subtitle reveal">Một cuốn sổ lưu niệm nhỏ về hai đứa mình.</p>
+            <div class="gallery-filters reveal">
+                <button class="filter-btn active" data-filter="all">Tất cả</button>
+                <button class="filter-btn" data-filter="first">Ký ức đầu tiên</button>
+                <button class="filter-btn" data-filter="dates">Những buổi hẹn</button>
+                <button class="filter-btn" data-filter="silly">Khoảnh khắc ngốc nghếch</button>
+                <button class="filter-btn" data-filter="favorite">Ảnh anh thích nhất</button>
+            </div>
+            <div class="gallery-grid" id="gallery-grid"><!-- populated by JS --></div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="modal-overlay" id="lightbox">
+        <button class="lightbox-nav lightbox-prev" id="lightbox-prev">&#8249;</button>
+        <div class="lightbox-content">
+            <button class="modal-close" data-close-modal="lightbox">&times;</button>
+            <img id="lightbox-img" src="" alt="" />
+            <p id="lightbox-caption"></p>
+        </div>
+        <button class="lightbox-nav lightbox-next" id="lightbox-next">&#8250;</button>
+    </div>
+
+    <!-- ===================== 5. OUR SONG ===================== -->
+    <section id="song" class="section">
+        <div class="container song-container">
+            <div class="vinyl-wrap reveal">
+                <div class="vinyl" id="vinyl">
+                    <div class="vinyl-label"></div>
+                </div>
+            </div>
+            <div class="song-info reveal">
+                <p class="eyebrow">Bài hát của chúng ta</p>
+                <h2 id="song-title" class="song-title"></h2>
+                <p class="song-quote">"Mỗi lần nghe bài hát này, anh lại nghĩ về em."</p>
+
+                <div class="player">
+                    <button id="play-btn" class="play-btn" aria-label="Phát">
+                        <svg id="icon-play" viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="currentColor" d="M8 5v14l11-7z" />
+                        </svg>
+                        <svg id="icon-pause" viewBox="0 0 24 24" width="20" height="20" style="display:none">
+                            <path fill="currentColor" d="M6 5h4v14H6zM14 5h4v14h-4z" />
+                        </svg>
+                    </button>
+                    <span class="player-time" id="current-time">0:00</span>
+                    <input type="range" id="progress-bar" class="progress-bar" value="0" min="0" max="100" step="0.1" />
+                    <span class="player-time" id="duration-time">0:00</span>
+                    <div class="volume-wrap">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path fill="currentColor" d="M3 10v4h4l5 5V5L7 10H3z" />
+                        </svg>
+                        <input type="range" id="volume-bar" class="volume-bar" value="0.7" min="0" max="1"
+                            step="0.01" />
+                    </div>
+                </div>
+                <audio id="audio-player" src="assets/music/our-song.mp3" preload="metadata"></audio>
+                <p class="song-note" id="autoplay-note"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== 6. OPEN WHEN... ===================== -->
+    <section id="openwhen" class="section">
+        <div class="container">
+            <h2 class="section-title reveal">Mở thư khi...</h2>
+            <p class="section-subtitle reveal">Những lá thư nhỏ dành cho những lúc em cần.</p>
+            <div class="envelopes-grid" id="envelopes-grid"><!-- populated by JS --></div>
+        </div>
+    </section>
+
+    <div class="modal-overlay" id="letter-modal">
+        <div class="modal-card letter-card">
+            <button class="modal-close" data-close-modal="letter-modal">&times;</button>
+            <h3 id="letter-title"></h3>
+            <p id="letter-message"></p>
+        </div>
+    </div>
+
+    <!-- ===================== 7. 100 REASONS ===================== -->
+    <section id="reasons" class="section">
+        <div class="container reveal">
+            <h2 class="section-title">100 lý do anh yêu em</h2>
+            <div class="reason-card" id="reason-card">
+                <span class="reason-index" id="reason-index"></span>
+                <p class="reason-text" id="reason-text">Cho anh một lý do nhé ♡</p>
+            </div>
+            <div class="reason-progress-wrap">
+                <div class="reason-progress-bar">
+                    <div id="reason-progress-fill"></div>
+                </div>
+                <span id="reason-progress-label">0 / 100</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== 8. MINI QUIZ ===================== -->
+    <section id="quiz" class="section">
+        <div class="container reveal">
+            <h2 class="section-title">Em hiểu chúng ta đến đâu?</h2>
+            <div class="quiz-box" id="quiz-box"><!-- populated by JS --></div>
+        </div>
+    </section>
+
+    <!-- ===================== 9. SECRET BOX ===================== -->
+    <section id="secret" class="section">
+        <div class="container reveal">
+            <h2 class="section-title">Có một điều dành cho em ở đây.</h2>
+            <div class="secret-box" id="secret-box">
+                <div class="secret-lock" id="secret-lock">🔒</div>
+                <form id="secret-form" class="secret-form">
+                    <input type="password" id="secret-input" placeholder="Nhập bí mật của chúng ta..." autocomplete="off" />
+                    <button type="submit" class="btn btn-outline">Mở khóa</button>
+                </form>
+                <p class="secret-error" id="secret-error"></p>
+
+                <div class="secret-content" id="secret-content">
+                    <p class="secret-letter">
+                        Nếu em đang đọc những dòng này, nghĩa là em vẫn nhớ — chỉ vậy thôi cũng đủ khiến anh mỉm cười.
+                        Góc nhỏ này dành riêng cho em: một lời nhắc dịu dàng rằng giữa vô vàn vũ trụ có thể tồn tại,
+                        anh biết ơn vô hạn vì đã tìm thấy em trong vũ trụ này.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== 10. FINAL CINEMATIC ===================== -->
+    <section id="finale" class="section finale">
+        <div class="finale-lines" id="finale-lines">
+            <p class="finale-line">Nếu được chọn lại...</p>
+            <p class="finale-line">Anh vẫn sẽ chọn em.</p>
+            <p class="finale-line">Mỗi lần, không ngoại lệ.</p>
+        </div>
+        <div class="finale-final" id="finale-final">
+            <p class="finale-happy" id="finale-happy"></p>
+            <p class="finale-note">Vì tất cả những kỷ niệm ta đã có,<br />và những kỷ niệm ta sẽ cùng tạo nên.</p>
+            <p class="finale-names" id="finale-names"></p>
+        </div>
+    </section>
+
+    <script src="js/config.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+<template hidden>
 
 <head>
     <meta charset="UTF-8" />
@@ -232,239 +463,5 @@
     <script src="js/main.js"></script>
 </body>
 
-=======
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Our Little Universe</title>
-    <meta name="description" content="A little place made just for us." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap"
-        rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css" />
-</head>
-
-<body>
-
-    <!-- Global fixed background: night sky canvas + progress bar -->
-    <canvas id="sky-canvas"></canvas>
-    <div id="cursor-glow"></div>
-    <div id="floating-hearts"></div>
-    <div id="scroll-progress">
-        <div id="scroll-progress-bar"></div>
-    </div>
-
-    <!-- ===================== 1. HERO ===================== -->
-    <section id="hero" class="section hero">
-        <div class="hero-content">
-            <p class="hero-eyebrow reveal-line">Hey love,</p>
-            <h1 class="hero-title reveal-line" id="hero-typing"></h1>
-            <button id="enter-btn" class="btn btn-primary reveal-line">
-                <span>Enter our world</span> <span class="heart">♡</span>
-            </button>
-        </div>
-        <div class="scroll-hint">scroll</div>
-    </section>
-
-    <!-- ===================== 2. LOVE COUNTER ===================== -->
-    <section id="counter" class="section">
-        <div class="container reveal">
-            <p class="eyebrow">We've been together for</p>
-            <div class="counter-grid">
-                <div class="counter-item">
-                    <span class="counter-number" id="count-days">0</span>
-                    <span class="counter-label">Days</span>
-                </div>
-                <div class="counter-item">
-                    <span class="counter-number" id="count-hours">0</span>
-                    <span class="counter-label">Hours</span>
-                </div>
-                <div class="counter-item">
-                    <span class="counter-number" id="count-minutes">0</span>
-                    <span class="counter-label">Minutes</span>
-                </div>
-                <div class="counter-item">
-                    <span class="counter-number" id="count-seconds">0</span>
-                    <span class="counter-label">Seconds</span>
-                </div>
-            </div>
-            <p class="counter-footer">And I'm still choosing you.</p>
-        </div>
-    </section>
-
-    <!-- ===================== 3. OUR STORY / TIMELINE ===================== -->
-    <section id="story" class="section">
-        <div class="container">
-            <h2 class="section-title reveal">Our Story</h2>
-            <p class="section-subtitle reveal">Every little moment that led to us.</p>
-            <div class="timeline" id="timeline"><!-- populated by JS --></div>
-        </div>
-    </section>
-
-    <!-- Timeline modal -->
-    <div class="modal-overlay" id="timeline-modal">
-        <div class="modal-card">
-            <button class="modal-close" data-close-modal="timeline-modal">&times;</button>
-            <img id="timeline-modal-img" src="" alt="" />
-            <p class="modal-date" id="timeline-modal-date"></p>
-            <h3 id="timeline-modal-title"></h3>
-            <p id="timeline-modal-detail"></p>
-        </div>
-    </div>
-
-    <!-- ===================== 4. OUR MEMORIES ===================== -->
-    <section id="memories" class="section">
-        <div class="container">
-            <h2 class="section-title reveal">Our Memories</h2>
-            <p class="section-subtitle reveal">A little scrapbook of us.</p>
-            <div class="gallery-filters reveal">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="first">First memories</button>
-                <button class="filter-btn" data-filter="dates">Our dates</button>
-                <button class="filter-btn" data-filter="silly">Silly moments</button>
-                <button class="filter-btn" data-filter="favorite">My favorite photos</button>
-            </div>
-            <div class="gallery-grid" id="gallery-grid"><!-- populated by JS --></div>
-        </div>
-    </section>
-
-    <!-- Lightbox -->
-    <div class="modal-overlay" id="lightbox">
-        <button class="lightbox-nav lightbox-prev" id="lightbox-prev">&#8249;</button>
-        <div class="lightbox-content">
-            <button class="modal-close" data-close-modal="lightbox">&times;</button>
-            <img id="lightbox-img" src="" alt="" />
-            <p id="lightbox-caption"></p>
-        </div>
-        <button class="lightbox-nav lightbox-next" id="lightbox-next">&#8250;</button>
-    </div>
-
-    <!-- ===================== 5. OUR SONG ===================== -->
-    <section id="song" class="section">
-        <div class="container song-container">
-            <div class="vinyl-wrap reveal">
-                <div class="vinyl" id="vinyl">
-                    <div class="vinyl-label"></div>
-                </div>
-            </div>
-            <div class="song-info reveal">
-                <p class="eyebrow">Our Song</p>
-                <h2 id="song-title" class="song-title"></h2>
-                <p class="song-quote">"Every time I hear this song, I think of you."</p>
-
-                <div class="player">
-                    <button id="play-btn" class="play-btn" aria-label="Play">
-                        <svg id="icon-play" viewBox="0 0 24 24" width="20" height="20">
-                            <path fill="currentColor" d="M8 5v14l11-7z" />
-                        </svg>
-                        <svg id="icon-pause" viewBox="0 0 24 24" width="20" height="20" style="display:none">
-                            <path fill="currentColor" d="M6 5h4v14H6zM14 5h4v14h-4z" />
-                        </svg>
-                    </button>
-                    <span class="player-time" id="current-time">0:00</span>
-                    <input type="range" id="progress-bar" class="progress-bar" value="0" min="0" max="100" step="0.1" />
-                    <span class="player-time" id="duration-time">0:00</span>
-                    <div class="volume-wrap">
-                        <svg viewBox="0 0 24 24" width="16" height="16">
-                            <path fill="currentColor" d="M3 10v4h4l5 5V5L7 10H3z" />
-                        </svg>
-                        <input type="range" id="volume-bar" class="volume-bar" value="0.7" min="0" max="1"
-                            step="0.01" />
-                    </div>
-                </div>
-                <audio id="audio-player" src="assets/music/our-song.mp3" preload="metadata"></audio>
-                <p class="song-note" id="autoplay-note"></p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===================== 6. OPEN WHEN... ===================== -->
-    <section id="openwhen" class="section">
-        <div class="container">
-            <h2 class="section-title reveal">Open When...</h2>
-            <p class="section-subtitle reveal">Little letters, for whenever you need them.</p>
-            <div class="envelopes-grid" id="envelopes-grid"><!-- populated by JS --></div>
-        </div>
-    </section>
-
-    <div class="modal-overlay" id="letter-modal">
-        <div class="modal-card letter-card">
-            <button class="modal-close" data-close-modal="letter-modal">&times;</button>
-            <h3 id="letter-title"></h3>
-            <p id="letter-message"></p>
-        </div>
-    </div>
-
-    <!-- ===================== 7. 100 REASONS ===================== -->
-    <section id="reasons" class="section">
-        <div class="container reveal">
-            <h2 class="section-title">100 Reasons Why I Love You</h2>
-            <div class="reason-card" id="reason-card">
-                <span class="reason-index" id="reason-index"></span>
-                <p class="reason-text" id="reason-text">Give me a reason ♡</p>
-            </div>
-            <div class="reason-progress-wrap">
-                <div class="reason-progress-bar">
-                    <div id="reason-progress-fill"></div>
-                </div>
-                <span id="reason-progress-label">0 / 100</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===================== 8. MINI QUIZ ===================== -->
-    <section id="quiz" class="section">
-        <div class="container reveal">
-            <h2 class="section-title">How well do you know us?</h2>
-            <div class="quiz-box" id="quiz-box"><!-- populated by JS --></div>
-        </div>
-    </section>
-
-    <!-- ===================== 9. SECRET BOX ===================== -->
-    <section id="secret" class="section">
-        <div class="container reveal">
-            <h2 class="section-title">There is something here for you.</h2>
-            <div class="secret-box" id="secret-box">
-                <div class="secret-lock" id="secret-lock">🔒</div>
-                <form id="secret-form" class="secret-form">
-                    <input type="password" id="secret-input" placeholder="Enter our secret..." autocomplete="off" />
-                    <button type="submit" class="btn btn-outline">Unlock</button>
-                </form>
-                <p class="secret-error" id="secret-error"></p>
-
-                <div class="secret-content" id="secret-content">
-                    <p class="secret-letter">
-                        If you're reading this, it means you remembered — and that alone makes me smile.
-                        This little corner was just for you: a quiet reminder that out of every universe
-                        that could have existed, I'm endlessly grateful for the one where I found you.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===================== 10. FINAL CINEMATIC ===================== -->
-    <section id="finale" class="section finale">
-        <div class="finale-lines" id="finale-lines">
-            <p class="finale-line">If I could choose again...</p>
-            <p class="finale-line">I'd still choose you.</p>
-            <p class="finale-line">Every single time.</p>
-        </div>
-        <div class="finale-final" id="finale-final">
-            <p class="finale-happy" id="finale-happy"></p>
-            <p class="finale-note">Here's to all the memories we've made,<br />and all the ones we haven't made yet.</p>
-            <p class="finale-names" id="finale-names"></p>
-        </div>
-    </section>
-
-    <script src="js/config.js"></script>
-    <script src="js/main.js"></script>
-</body>
-
->>>>>>> 20f2078b1abfa739d060c3f25f6104672ee189c0
+</template>
 </html>

@@ -196,13 +196,19 @@ a {
 /* ---------- Reveal-on-scroll ---------- */
 .reveal,
 .reveal-line {
-    opacity: 0;
-    transform: translateY(36px);
+    opacity: 1;
+    transform: translateY(0);
     transition: opacity var(--transition-slow), transform var(--transition-slow);
 }
 
-.reveal.visible,
-.reveal-line.visible {
+html.js-ready .reveal,
+html.js-ready .reveal-line {
+    opacity: 0;
+    transform: translateY(36px);
+}
+
+html.js-ready .reveal.visible,
+html.js-ready .reveal-line.visible {
     opacity: 1;
     transform: translateY(0);
 }

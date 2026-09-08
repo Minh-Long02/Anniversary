@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initSecretBox();
     initFinale();
     initModalCloseHandlers();
+    document.documentElement.classList.add("js-ready");
 });
 
 /* ============================================================
@@ -145,7 +146,7 @@ function initRevealOnScroll() {
    ============================================================ */
 function initHeroTyping() {
     const el = document.getElementById("hero-typing");
-    const text = "A little place made just for us.";
+    const text = "Một góc nhỏ được tạo nên dành riêng cho chúng ta.";
     let i = 0;
 
     function type() {
@@ -349,7 +350,7 @@ function initSong() {
     playBtn.addEventListener("click", () => {
         if (audio.paused) {
             audio.play().catch(() => {
-                autoplayNote.textContent = "Tap play again once your browser allows audio.";
+                autoplayNote.textContent = "Hãy nhấn phát lại khi trình duyệt cho phép âm thanh.";
             });
         } else {
             audio.pause();
@@ -382,7 +383,7 @@ function initSong() {
 
     // No autoplay: browsers block it anyway, we simply do nothing on load.
     audio.addEventListener("error", () => {
-        autoplayNote.textContent = "Add your song file at assets/music/our-song.mp3";
+        autoplayNote.textContent = "Hãy thêm file nhạc vào assets/music/our-song.mp3";
     });
 }
 
@@ -460,7 +461,7 @@ function initQuiz() {
     function renderQuestion() {
         const q = quizData[current];
         box.innerHTML = `
-      <p class="quiz-progress">Question ${current + 1} / ${quizData.length}</p>
+    <p class="quiz-progress">Câu hỏi ${current + 1} / ${quizData.length}</p>
       <p class="quiz-question">${q.question}</p>
       <div class="quiz-options">
         ${q.options.map((opt, i) => `<button class="quiz-option" data-index="${i}">${opt}</button>`).join("")}
@@ -499,9 +500,9 @@ function initQuiz() {
         const good = score >= quizData.length * 0.7;
         box.innerHTML = `
       <div class="quiz-result">
-        <h3>You got ${score}/${quizData.length}.</h3>
-        <p>${good ? "Okay... you really do know us. ♡" : "Not bad — let's make more memories to remember."}</p>
-        <button class="btn btn-outline" id="quiz-retry">Play again</button>
+        <h3>Em trả lời đúng ${score}/${quizData.length} câu.</h3>
+        <p>${good ? "Được lắm... em thật sự hiểu chúng ta. ♡" : "Không tệ đâu — hãy cùng tạo thêm nhiều kỷ niệm nhé."}</p>
+        <button class="btn btn-outline" id="quiz-retry">Chơi lại</button>
       </div>
     `;
         document.getElementById("quiz-retry").addEventListener("click", () => {
@@ -533,7 +534,7 @@ function initSecretBox() {
             content.classList.add("open");
             form.style.display = "none";
         } else {
-            error.textContent = "That's not quite it... try again.";
+            error.textContent = "Chưa đúng rồi... thử lại nhé.";
             input.value = "";
         }
     });
@@ -543,7 +544,7 @@ function initSecretBox() {
    10. FINAL CINEMATIC SECTION
    ============================================================ */
 function initFinale() {
-    document.getElementById("finale-happy").textContent = `Happy Anniversary, ${CONFIG.girlfriendName}. ♡`;
+    document.getElementById("finale-happy").textContent = `Chúc mừng ngày kỷ niệm, ${CONFIG.girlfriendName}. ♡`;
     document.getElementById("finale-names").textContent = `${CONFIG.yourName} × ${CONFIG.girlfriendName}`;
 
     const finaleSection = document.getElementById("finale");
